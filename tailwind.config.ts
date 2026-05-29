@@ -51,6 +51,15 @@ const config: Config = {
         inter: ["var(--font-inter)"],
         "space-grotesk": ["var(--font-space-grotesk)"],
       },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "var(--radius) - 2px",
+        sm: "var(--radius) - 4px",
+      },
+      backgroundImage: {
+        "auth-dark": 'url("/images/auth-dark.png")',
+        "auth-light": 'url("/images/auth-light.png")',
+      },
     },
   },
   plugins: [],
