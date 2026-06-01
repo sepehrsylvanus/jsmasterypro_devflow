@@ -3,6 +3,9 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Toaster } from "sonner";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
 
 const inter = localFont({
   src: "./fonts/interVf.ttf",
@@ -25,11 +28,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const RootLayout = async ({ children }: { children: React.ReactNode }) => {
+  const session = await auth();
+
   return (
     <html
       lang="en"
@@ -42,16 +43,21 @@ export default function RootLayout({
       )}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">
-        <ThemeProvider
-          attribute={"class"}
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
-      </body>
+      <SessionProvider session={session}>
+        <body className="min-h-full flex flex-col">
+          <ThemeProvider
+            attribute={"class"}
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+          <Toaster />
+        </body>
+      </SessionProvider>
     </html>
   );
-}
+};
+
+export default RootLayout;
