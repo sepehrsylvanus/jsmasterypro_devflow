@@ -1,13 +1,29 @@
 import { auth, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/route";
+import Link from "next/link";
 
 const Page = async () => {
-  const session = await auth();
-
   return (
     <>
-      <h1 className="h1-bold">Tailwind is fun!!!</h1>
+      <section className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
+        <h1 className="h1-bold text-dark100_light900">All Questions</h1>
+
+        <Button
+          className="primary-gradient min-h-11.5 px-4 py-3 text-light-900!"
+          asChild
+        >
+          <Link href={ROUTES.ASK_QUESTION}>Ask a Questions</Link>
+        </Button>
+      </section>
+      <section className="mt-11">LocalSearch</section>
+      HOMEFILTER
+      <div className="mt-10 flex w-full flex-col gap-6">
+        <p>Question Card 1</p>
+        <p>Question Card 1</p>
+        <p>Question Card 1</p>
+        <p>Question Card 1</p>
+      </div>
     </>
   );
 };
