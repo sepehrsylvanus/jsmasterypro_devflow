@@ -1,4 +1,5 @@
 import { auth, signOut } from "@/auth";
+import QuestionCard from "@/components/cards/QuestionCard";
 import HomeFIlter from "@/components/filters/HomeFIlter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
@@ -26,11 +27,12 @@ const questions = [
     author: {
       _id: "1",
       name: "John Doe",
+      image: `https://picsum.photos/id/1/200/200`,
     },
     upvotes: 10,
     answers: 5,
     views: 100,
-    createdAt: new Date(),
+    createdAt: getRandomPastDate(),
   },
   {
     _id: "2",
@@ -48,11 +50,12 @@ const questions = [
     author: {
       _id: "2",
       name: "Jane Smith",
+      image: `https://picsum.photos/id/2/200/200`,
     },
     upvotes: 8,
     answers: 3,
     views: 80,
-    createdAt: new Date(),
+    createdAt: getRandomPastDate(),
   },
   {
     _id: "3",
@@ -66,13 +69,23 @@ const questions = [
     author: {
       _id: "3",
       name: "Bob Johnson",
+      image: `https://picsum.photos/id/3/200/200`,
     },
     upvotes: 6,
     answers: 2,
     views: 60,
-    createdAt: new Date(),
+    createdAt: getRandomPastDate(),
   },
 ];
+
+function getRandomPastDate(): Date {
+  const minDate = new Date(2020, 0, 1);
+  const maxDate = new Date();
+  const randomTime = new Date(
+    minDate.getTime() + Math.random() * (maxDate.getTime() - minDate.getTime()),
+  );
+  return randomTime;
+}
 
 const Page = async ({ searchParams }: SearchParams) => {
   const { query = "", filter = "" } = await searchParams;
@@ -114,7 +127,7 @@ const Page = async ({ searchParams }: SearchParams) => {
       <HomeFIlter />
       <div className="mt-10 flex w-full flex-col gap-6">
         {filteredQuestions.map((question) => (
-          <h1 key={question._id}>{question.title}</h1>
+          <QuestionCard key={question._id} question={question} />
         ))}
       </div>
     </>
